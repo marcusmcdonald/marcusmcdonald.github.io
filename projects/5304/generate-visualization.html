@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>generate_visualization</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>generate-visualization</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7532,8 +7532,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load CSV that was create by clean_soccer_data.ipynb</span>
-<span class="n">club_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"subset/club_summary.csv"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load CSV that was create by clean-soccer-data.ipynb</span>
+<span class="n">league_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"league_summary.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7548,8 +7548,8 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Season slider param</span>
-<span class="n">min_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">club_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
-<span class="n">max_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">club_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">min_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">league_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="n">max_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">league_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
 
 <span class="n">season_param</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
     <span class="s2">"Season"</span><span class="p">,</span>
@@ -7565,7 +7565,7 @@ a.anchor-link {
 
 
 <span class="c1"># Club dropdown param</span>
-<span class="n">club_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"(All clubs)"</span><span class="p">]</span> <span class="o">+</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">club_summary</span><span class="p">[</span><span class="s2">"club_name"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">club_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"(All clubs)"</span><span class="p">]</span> <span class="o">+</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">league_summary</span><span class="p">[</span><span class="s2">"club_name"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 
 <span class="n">club_param</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
     <span class="s2">"Club"</span><span class="p">,</span>
@@ -7598,6 +7598,8 @@ a.anchor-link {
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Helper functions for scatter plots</span>
 
+<span class="c1"># This function help to create the hightlighted mark</span>
+<span class="c1"># when a team is selected from the dropdown box</span>
 <span class="k">def</span> <span class="nf">scatter_highlighted_point</span><span class="p">(</span><span class="n">base_chart</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -7609,14 +7611,17 @@ a.anchor-link {
         <span class="p">)</span>
     <span class="p">)</span>
 
-
+<span class="c1"># This function ensure that all points other than the current season</span>
+<span class="c1"># selected are shown in the background and grayed out</span>
 <span class="k">def</span> <span class="nf">scatter_background_points</span><span class="p">(</span><span class="n">base_chart</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
         <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">"lightgray"</span><span class="p">),</span>
         <span class="n">opacity</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.20</span><span class="p">),</span>
     <span class="p">)</span>
 
-
+<span class="c1"># This function places the currently selected season's marks</span>
+<span class="c1"># in the foreground and adds the color for this chart's marks</span>
+<span class="c1"># to the active marks</span>
 <span class="k">def</span> <span class="nf">scatter_foreground_points</span><span class="p">(</span><span class="n">base_chart</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
@@ -7640,7 +7645,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Goals per game vs performance</span>
-<span class="n">base_goals_perf</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">club_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<span class="n">base_goals_perf</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">league_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
     <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"goals_per_game:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Goals per game"</span><span class="p">),</span>
     <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"performance:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Performance (Points / Total Points)"</span><span class="p">),</span>
     <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span>
@@ -7677,23 +7682,23 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-2cee9b510dc34622a1b28d4f3ec97044.vega-embed {
+  #altair-viz-e4b6c60618b1419bae58f41925d9e83d.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-2cee9b510dc34622a1b28d4f3ec97044.vega-embed details,
-  #altair-viz-2cee9b510dc34622a1b28d4f3ec97044.vega-embed details summary {
+  #altair-viz-e4b6c60618b1419bae58f41925d9e83d.vega-embed details,
+  #altair-viz-e4b6c60618b1419bae58f41925d9e83d.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-2cee9b510dc34622a1b28d4f3ec97044"></div>
+<div id="altair-viz-e4b6c60618b1419bae58f41925d9e83d"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-2cee9b510dc34622a1b28d4f3ec97044") {
-      outputDiv = document.getElementById("altair-viz-2cee9b510dc34622a1b28d4f3ec97044");
+    if (outputDiv.id !== "altair-viz-e4b6c60618b1419bae58f41925d9e83d") {
+      outputDiv = document.getElementById("altair-viz-e4b6c60618b1419bae58f41925d9e83d");
     }
 
     const paths = {
@@ -7756,7 +7761,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Cards per game vs performance</span>
-<span class="n">base_cards_perf</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">club_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<span class="n">base_cards_perf</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">league_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
     <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"cards_per_game:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Cards per game"</span><span class="p">),</span>
     <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"performance:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Performance"</span><span class="p">),</span>
     <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span>
@@ -7793,23 +7798,23 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-244e4ba946414393a0f8f94bf06ea81d.vega-embed {
+  #altair-viz-9356eb29820e40c4877ff86c32a2501f.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-244e4ba946414393a0f8f94bf06ea81d.vega-embed details,
-  #altair-viz-244e4ba946414393a0f8f94bf06ea81d.vega-embed details summary {
+  #altair-viz-9356eb29820e40c4877ff86c32a2501f.vega-embed details,
+  #altair-viz-9356eb29820e40c4877ff86c32a2501f.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-244e4ba946414393a0f8f94bf06ea81d"></div>
+<div id="altair-viz-9356eb29820e40c4877ff86c32a2501f"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-244e4ba946414393a0f8f94bf06ea81d") {
-      outputDiv = document.getElementById("altair-viz-244e4ba946414393a0f8f94bf06ea81d");
+    if (outputDiv.id !== "altair-viz-9356eb29820e40c4877ff86c32a2501f") {
+      outputDiv = document.getElementById("altair-viz-9356eb29820e40c4877ff86c32a2501f");
     }
 
     const paths = {
@@ -7872,7 +7877,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Goals For vs Goals Against</span>
-<span class="n">base_gf_ga</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">club_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<span class="n">base_gf_ga</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">league_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
     <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"goals_for:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Goals For"</span><span class="p">),</span>
     <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"goals_against:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Goals Against"</span><span class="p">),</span>
     <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span>
@@ -7910,23 +7915,23 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-e04f67f3e9644b7586f49c6d3c7d0d45.vega-embed {
+  #altair-viz-50fc9649bddb4358bfff82b9a4c4139e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e04f67f3e9644b7586f49c6d3c7d0d45.vega-embed details,
-  #altair-viz-e04f67f3e9644b7586f49c6d3c7d0d45.vega-embed details summary {
+  #altair-viz-50fc9649bddb4358bfff82b9a4c4139e.vega-embed details,
+  #altair-viz-50fc9649bddb4358bfff82b9a4c4139e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e04f67f3e9644b7586f49c6d3c7d0d45"></div>
+<div id="altair-viz-50fc9649bddb4358bfff82b9a4c4139e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e04f67f3e9644b7586f49c6d3c7d0d45") {
-      outputDiv = document.getElementById("altair-viz-e04f67f3e9644b7586f49c6d3c7d0d45");
+    if (outputDiv.id !== "altair-viz-50fc9649bddb4358bfff82b9a4c4139e") {
+      outputDiv = document.getElementById("altair-viz-50fc9649bddb4358bfff82b9a4c4139e");
     }
 
     const paths = {
@@ -7989,12 +7994,13 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Market value vs league finish</span>
-<span class="n">base_market_value</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">club_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<span class="n">base_market_value</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">league_summary</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
     <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span>
         <span class="s2">"market_value_eur:Q"</span><span class="p">,</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">"Total market value (EUR)"</span><span class="p">,</span>
         <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"log"</span><span class="p">),</span>
         <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span>
+            <span class="c1"># Doesn't appear to be a short code for money increaments</span>
             <span class="n">labelExpr</span><span class="o">=</span><span class="s2">"datum.value &gt;= 1e9 ? (datum.value/1e9) + 'B' : "</span>
             <span class="s2">"datum.value &gt;= 1e6 ? (datum.value/1e6) + 'M' : datum.value"</span>
         <span class="p">),</span>
@@ -8038,23 +8044,23 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-f9ba1a1a833e477bb0a9ea3aa1dc82b4.vega-embed {
+  #altair-viz-b74b75bd3a9e493bbfa64184551b7cf1.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-f9ba1a1a833e477bb0a9ea3aa1dc82b4.vega-embed details,
-  #altair-viz-f9ba1a1a833e477bb0a9ea3aa1dc82b4.vega-embed details summary {
+  #altair-viz-b74b75bd3a9e493bbfa64184551b7cf1.vega-embed details,
+  #altair-viz-b74b75bd3a9e493bbfa64184551b7cf1.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-f9ba1a1a833e477bb0a9ea3aa1dc82b4"></div>
+<div id="altair-viz-b74b75bd3a9e493bbfa64184551b7cf1"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-f9ba1a1a833e477bb0a9ea3aa1dc82b4") {
-      outputDiv = document.getElementById("altair-viz-f9ba1a1a833e477bb0a9ea3aa1dc82b4");
+    if (outputDiv.id !== "altair-viz-b74b75bd3a9e493bbfa64184551b7cf1") {
+      outputDiv = document.getElementById("altair-viz-b74b75bd3a9e493bbfa64184551b7cf1");
     }
 
     const paths = {
@@ -8108,7 +8114,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=66ccd58a">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6f98f713">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8116,9 +8122,31 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Helper function for hightlighting the selected team's bar mark</span>
+<span class="k">def</span> <span class="nf">bar_highlight</span><span class="p">(</span><span class="n">base_chart</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span>
+    <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">season_expr</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">club_expr_only</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=66ccd58a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Yellow vs Red cards per game</span>
 <span class="n">discipline_bars</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">club_summary</span><span class="p">)</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">league_summary</span><span class="p">)</span>
     <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">season_expr</span><span class="p">)</span>
     <span class="o">.</span><span class="n">transform_fold</span><span class="p">(</span>
         <span class="p">[</span><span class="s2">"yellow_cards_per_game"</span><span class="p">,</span> <span class="s2">"red_cards_per_game"</span><span class="p">],</span>
@@ -8153,8 +8181,6 @@ a.anchor-link {
         <span class="p">],</span>
     <span class="p">)</span>
     <span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
-        <span class="c1"># truncated_card_type="substring(datum.card_type, 0, 1)",</span>
-        <span class="c1"># truncated_card_type="regexp(datum.card_type, '[a-z]+')",</span>
         <span class="n">truncated_card_type</span><span class="o">=</span><span class="s2">"datum.card_type === 'yellow_cards_per_game' ? 'Yellow' : 'Red'"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="o">.</span><span class="n">properties</span><span class="p">(</span>
@@ -8163,15 +8189,8 @@ a.anchor-link {
         <span class="n">height</span><span class="o">=</span><span class="n">chart_height</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="p">)</span>
-<span class="n">discipline_bars_highlight</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">discipline_bars</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">season_expr</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">club_expr_only</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">opacity</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">),</span>
-    <span class="p">)</span>
-<span class="p">)</span>
 
-<span class="n">discipline_bars</span> <span class="o">+=</span> <span class="n">discipline_bars_highlight</span>
+<span class="n">discipline_bars</span> <span class="o">+=</span> <span class="n">bar_highlight</span><span class="p">(</span><span class="n">discipline_bars</span><span class="p">)</span>
 
 <span class="n">discipline_bars</span> <span class="o">=</span> <span class="n">discipline_bars</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">season_param</span><span class="p">,</span> <span class="n">club_param</span><span class="p">)</span>
 
@@ -8186,26 +8205,26 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-f7c356f69727419482ca8b2b50346a08.vega-embed {
+  #altair-viz-2c65fff72439482a9c1e8cb356128ce3.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-f7c356f69727419482ca8b2b50346a08.vega-embed details,
-  #altair-viz-f7c356f69727419482ca8b2b50346a08.vega-embed details summary {
+  #altair-viz-2c65fff72439482a9c1e8cb356128ce3.vega-embed details,
+  #altair-viz-2c65fff72439482a9c1e8cb356128ce3.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-f7c356f69727419482ca8b2b50346a08"></div>
+<div id="altair-viz-2c65fff72439482a9c1e8cb356128ce3"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-f7c356f69727419482ca8b2b50346a08") {
-      outputDiv = document.getElementById("altair-viz-f7c356f69727419482ca8b2b50346a08");
+    if (outputDiv.id !== "altair-viz-2c65fff72439482a9c1e8cb356128ce3") {
+      outputDiv = document.getElementById("altair-viz-2c65fff72439482a9c1e8cb356128ce3");
     }
 
     const paths = {
@@ -8264,12 +8283,12 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Win / Draw / Loss counts per Club</span>
 <span class="n">chart_wdl</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">club_summary</span><span class="p">)</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">league_summary</span><span class="p">)</span>
     <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">season_expr</span><span class="p">)</span>
     <span class="o">.</span><span class="n">transform_fold</span><span class="p">([</span><span class="s2">"wins"</span><span class="p">,</span> <span class="s2">"draws"</span><span class="p">,</span> <span class="s2">"losses"</span><span class="p">],</span> <span class="n">as_</span><span class="o">=</span><span class="p">[</span><span class="s2">"result_type"</span><span class="p">,</span> <span class="s2">"count"</span><span class="p">])</span>
     <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
@@ -8288,7 +8307,6 @@ a.anchor-link {
                 <span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="s2">"wins"</span><span class="p">,</span> <span class="s2">"draws"</span><span class="p">,</span> <span class="s2">"losses"</span><span class="p">],</span>
                 <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="s2">"#3ca951"</span><span class="p">,</span> <span class="s2">"#7f7f7f"</span><span class="p">,</span> <span class="s2">"#d62728"</span><span class="p">],</span>
             <span class="p">),</span>
-            <span class="c1"># legend=alt.Legend(title="Result Type", labelExpr="upper(datum.label)"),</span>
             <span class="n">legend</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Result Type"</span><span class="p">,</span> <span class="n">labelExpr</span><span class="o">=</span><span class="s2">"upper(datum.label[0]) + slice(datum.label, 1)"</span><span class="p">),</span>
         <span class="p">),</span>
         <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span>
@@ -8305,15 +8323,7 @@ a.anchor-link {
     <span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">chart_wdl_highlight</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">chart_wdl</span> <span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">season_expr</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">club_expr_only</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">opacity</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">),</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="n">chart_wdl</span> <span class="o">+=</span> <span class="n">chart_wdl_highlight</span>
+<span class="n">chart_wdl</span> <span class="o">+=</span> <span class="n">bar_highlight</span><span class="p">(</span><span class="n">chart_wdl</span><span class="p">)</span>
 
 <span class="n">chart_wdl</span> <span class="o">=</span> <span class="n">chart_wdl</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">season_param</span><span class="p">,</span> <span class="n">club_param</span><span class="p">)</span>
 
@@ -8328,26 +8338,26 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-30b3398cac3644a1afa01c02909131e2.vega-embed {
+  #altair-viz-086b4c2a9a4445debf91f7d1600e1587.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-30b3398cac3644a1afa01c02909131e2.vega-embed details,
-  #altair-viz-30b3398cac3644a1afa01c02909131e2.vega-embed details summary {
+  #altair-viz-086b4c2a9a4445debf91f7d1600e1587.vega-embed details,
+  #altair-viz-086b4c2a9a4445debf91f7d1600e1587.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-30b3398cac3644a1afa01c02909131e2"></div>
+<div id="altair-viz-086b4c2a9a4445debf91f7d1600e1587"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-30b3398cac3644a1afa01c02909131e2") {
-      outputDiv = document.getElementById("altair-viz-30b3398cac3644a1afa01c02909131e2");
+    if (outputDiv.id !== "altair-viz-086b4c2a9a4445debf91f7d1600e1587") {
+      outputDiv = document.getElementById("altair-viz-086b4c2a9a4445debf91f7d1600e1587");
     }
 
     const paths = {
@@ -8406,7 +8416,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Combined dashboard</span>
@@ -8438,26 +8448,26 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style>
-  #altair-viz-70fff4e317804dd9b583ebd7bdde9b9c.vega-embed {
+  #altair-viz-b398dda678934d188f19844a1017a831.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-70fff4e317804dd9b583ebd7bdde9b9c.vega-embed details,
-  #altair-viz-70fff4e317804dd9b583ebd7bdde9b9c.vega-embed details summary {
+  #altair-viz-b398dda678934d188f19844a1017a831.vega-embed details,
+  #altair-viz-b398dda678934d188f19844a1017a831.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-70fff4e317804dd9b583ebd7bdde9b9c"></div>
+<div id="altair-viz-b398dda678934d188f19844a1017a831"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-70fff4e317804dd9b583ebd7bdde9b9c") {
-      outputDiv = document.getElementById("altair-viz-70fff4e317804dd9b583ebd7bdde9b9c");
+    if (outputDiv.id !== "altair-viz-b398dda678934d188f19844a1017a831") {
+      outputDiv = document.getElementById("altair-viz-b398dda678934d188f19844a1017a831");
     }
 
     const paths = {
@@ -8516,7 +8526,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Save dashboard to HTML</span>
@@ -8532,7 +8542,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>'Saved to visualization-project-dashboard.html'</pre>
 </div>
@@ -8547,17 +8557,17 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>References:</p>
-<p>Altair-Viz. 2025. “User Guide.” Altair-Viz Documentation.
+<p>Altair-Viz. 2025. “User Guide.” Altair-Viz Documentation.<br/>
 Retrieved November 12, 2025 from <a href="https://altair-viz.github.io/user_guide">https://altair-viz.github.io/user_guide</a></p>
-<p>Altair-Viz. 2025. “User Guide – Customization.” Altair-Viz Documentation.
+<p>Altair-Viz. 2025. “User Guide – Customization.” Altair-Viz Documentation.<br/>
 Retrieved November 12, 2025 from <a href="https://altair-viz.github.io/user_guide/customization.html">https://altair-viz.github.io/user_guide/customization.html</a></p>
-<p>Altair-Viz. 2025. “User Guide – Layered &amp; Multi-View Charts.” Altair-Viz Documentation.
+<p>Altair-Viz. 2025. “User Guide – Layered &amp; Multi-View Charts.” Altair-Viz Documentation.<br/>
 Retrieved November 19, 2025 from <a href="https://altair-viz.github.io/user_guide/compound_charts.html">https://altair-viz.github.io/user_guide/compound_charts.html</a></p>
-<p>Lamarca, A. 2022. “Change single color in Altair plot.” Stack Overflow.
+<p>Lamarca, A. 2022. “Change single color in Altair plot.” Stack Overflow.<br/>
 Retrieved November 22, 2025 from <a href="https://stackoverflow.com/questions/71352135/change-single-color-in-altair-plot">https://stackoverflow.com/questions/71352135/change-single-color-in-altair-plot</a></p>
-<p>Gunderson, B. 2022. “Is there a way to format tooltip values in Altair boxplot.” Stack Overflow.
+<p>Gunderson, B. 2022. “Is there a way to format tooltip values in Altair boxplot.” Stack Overflow.<br/>
 Retrieved November 23, 2025 from <a href="https://stackoverflow.com/questions/66614926/is-there-a-way-to-format-tooltip-values-in-altair-boxplot">https://stackoverflow.com/questions/66614926/is-there-a-way-to-format-tooltip-values-in-altair-boxplot</a></p>
-<p>Blueboots. 2021. “Choosing how many x axis labels display on an Altair chart in Python.” Stack Overflow.
+<p>Blueboots. 2021. “Choosing how many x axis labels display on an Altair chart in Python.” Stack Overflow.<br/>
 Retrieved November 23, 2025 from <a href="https://stackoverflow.com/questions/70341257/choosing-how-many-x-axis-labels-display-on-an-altair-chart-in-python">https://stackoverflow.com/questions/70341257/choosing-how-many-x-axis-labels-display-on-an-altair-chart-in-python</a></p>
 </div>
 </div>

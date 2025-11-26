@@ -7516,8 +7516,14 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>This notebook uses the Kaggle "player-scores" dataset to create a subset of the data for a given league.</p>
-<p>In my specific case, I am cleaning the data to utilize La Liga (ES1) subset of information provided.</p>
+<p>The Soccer dataset used for this project was sourced from Kaggle.<br/>
+<a href="https://www.kaggle.com/datasets/davidcariboo/player-scores%5C">https://www.kaggle.com/datasets/davidcariboo/player-scores\</a>
+<br/>
+The dataset is derived from the website Transfermarkt GmbH &amp; Co. KG (commonly referred to as Transfermarkt).<br/>
+This dataset's maintainer states that the data is "Football (Soccer) data scraped from Transfermarkt website."<br/>
+<br/>
+For my visualization task I am creating a subset of the data for a given league.<br/>
+Specifically, I am cleaning and munging the data to build dataset the corresponds to the La Liga (ES1) league information.</p>
 </div>
 </div>
 </div>
@@ -7560,8 +7566,9 @@ a.anchor-link {
 <span class="n">league_code_in_file_name</span> <span class="o">=</span> <span class="s2">""</span>
 
 <span class="c1"># Output directory for League subset</span>
-<span class="n">output_dir</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"subset</span><span class="si">{</span><span class="n">league_code_in_file_name</span><span class="si">}</span><span class="s2">"</span>
-<span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="n">BASE_DIR</span>
+<span class="c1"># output_dir = BASE_DIR / f"subset{league_code_in_file_name}"</span>
+<span class="c1"># output_dir.mkdir(exist_ok=True)</span>
 
 <span class="c1"># competitions.csv</span>
 <span class="n">competitions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">"competitions.csv"</span><span class="p">)</span>
@@ -7632,33 +7639,36 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>From here I will generate dataframes derived from the subset of the player-scores dataset I created above (again, in my case ES1).
-The dataframes will contain summary stats of the league and contain the following columns:</p>
-<p>[
-"season",
-"club_id",
-"club_name",
-"market_value_eur",
-"matches_played",
-"league_finish",
-"wins",
-"draws",
-"losses",
-"goals_for",
-"goals_against",
-"goal_difference",
-"points",
-"points_per_game",
-"goals_per_game",
-"goals_against_per_game",
-"performance",
-"yellow_cards",
-"red_cards",
-"yellow_cards_per_game",
-"red_cards_per_game",
-"cards_per_game",
-]</p>
-<p>These columns will end up in a single dataframe (and CSV). This will be where most of my visualization are drawn.</p>
+<p>From here I will generate dataframes derived from the subset of the player-scores dataset I created above (again, in my case ES1).<br/>
+The final dataframe will contain league summary stats for each club in the league.<br/>
+<br/>
+The dataset will contain the following columns:</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s2">"season"</span><span class="p">,</span>
+    <span class="s2">"club_id"</span><span class="p">,</span>
+    <span class="s2">"club_name"</span><span class="p">,</span>
+    <span class="s2">"market_value_eur"</span><span class="p">,</span>
+    <span class="s2">"matches_played"</span><span class="p">,</span>
+    <span class="s2">"league_finish"</span><span class="p">,</span>
+    <span class="s2">"wins"</span><span class="p">,</span>
+    <span class="s2">"draws"</span><span class="p">,</span>
+    <span class="s2">"losses"</span><span class="p">,</span>
+    <span class="s2">"goals_for"</span><span class="p">,</span>
+    <span class="s2">"goals_against"</span><span class="p">,</span>
+    <span class="s2">"goal_difference"</span><span class="p">,</span>
+    <span class="s2">"points"</span><span class="p">,</span>
+    <span class="s2">"points_per_game"</span><span class="p">,</span>
+    <span class="s2">"goals_per_game"</span><span class="p">,</span>
+    <span class="s2">"goals_against_per_game"</span><span class="p">,</span>
+    <span class="s2">"performance"</span><span class="p">,</span>
+    <span class="s2">"yellow_cards"</span><span class="p">,</span>
+    <span class="s2">"red_cards"</span><span class="p">,</span>
+    <span class="s2">"yellow_cards_per_game"</span><span class="p">,</span>
+    <span class="s2">"red_cards_per_game"</span><span class="p">,</span>
+    <span class="s2">"cards_per_game"</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+<p>These columns will end up in a single dataframe (and CSV). This will be where my visualization are drawn.</p>
 </div>
 </div>
 </div>
@@ -8203,7 +8213,7 @@ The dataframes will contain summary stats of the league and contain the followin
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Now creating a dataframe with sum of the card counts added</span>
-<span class="n">club_summary</span> <span class="o">=</span> <span class="n">club_season_performance</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+<span class="n">league_summary</span> <span class="o">=</span> <span class="n">club_season_performance</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
     <span class="n">card_events</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"season"</span><span class="p">,</span> <span class="s2">"club_id"</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
         <span class="n">yellow_cards</span><span class="o">=</span><span class="p">(</span><span class="s2">"yellow_card_event"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">),</span> <span class="n">red_cards</span><span class="o">=</span><span class="p">(</span><span class="s2">"red_card_event"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">)</span>
     <span class="p">),</span>
@@ -8212,26 +8222,26 @@ The dataframes will contain summary stats of the league and contain the followin
 <span class="p">)</span>
 
 <span class="c1"># Replace missing card counts with 0 and ensure integers</span>
-<span class="n">club_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span> <span class="o">=</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">club_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span> <span class="o">=</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">league_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span> <span class="o">=</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">league_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span> <span class="o">=</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># Per-game card metrics</span>
-<span class="n">club_summary</span><span class="p">[</span><span class="s2">"yellow_cards_per_game"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">club_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span> <span class="o">/</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"matches_played"</span><span class="p">]</span>
+<span class="n">league_summary</span><span class="p">[</span><span class="s2">"yellow_cards_per_game"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">league_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span> <span class="o">/</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"matches_played"</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">club_summary</span><span class="p">[</span><span class="s2">"red_cards_per_game"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">club_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span> <span class="o">/</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"matches_played"</span><span class="p">]</span>
+<span class="n">league_summary</span><span class="p">[</span><span class="s2">"red_cards_per_game"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">league_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span> <span class="o">/</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"matches_played"</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">club_summary</span><span class="p">[</span><span class="s2">"cards_per_game"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">club_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span> <span class="o">+</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">/</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"matches_played"</span><span class="p">]</span>
+<span class="n">league_summary</span><span class="p">[</span><span class="s2">"cards_per_game"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">league_summary</span><span class="p">[</span><span class="s2">"yellow_cards"</span><span class="p">]</span> <span class="o">+</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"red_cards"</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">/</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"matches_played"</span><span class="p">]</span>
 
 <span class="c1"># Keep only the columns we need from clubs</span>
 <span class="n">clubs_small</span> <span class="o">=</span> <span class="n">clubs</span><span class="p">[[</span><span class="s2">"club_id"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"club_name"</span><span class="p">})</span>
 
-<span class="n">club_summary</span> <span class="o">=</span> <span class="n">club_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">clubs_small</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"club_id"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
+<span class="n">league_summary</span> <span class="o">=</span> <span class="n">league_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">clubs_small</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"club_id"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">)</span>
 
-<span class="n">club_summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">league_summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -8419,7 +8429,7 @@ The dataframes will contain summary stats of the league and contain the followin
 <span class="n">valuations</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">valuations</span><span class="p">[</span><span class="s2">"date"</span><span class="p">])</span>
 <span class="n">valuations</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span> <span class="o">=</span> <span class="n">valuations</span><span class="p">[</span><span class="s2">"date"</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
 
-<span class="c1"># Creating the market value column for club_summary. </span>
+<span class="c1"># Creating the market value column for league_summary. </span>
 <span class="c1"># Here "Market value" = sum of each player's market value on that team</span>
 <span class="n">club_market_value</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">valuations</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"current_club_id"</span><span class="p">,</span> <span class="s2">"season"</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span>
@@ -8434,8 +8444,8 @@ The dataframes will contain summary stats of the league and contain the followin
     <span class="p">)</span>
 <span class="p">)</span>
 
-<span class="c1"># Merge modifications into club_summary</span>
-<span class="n">club_summary</span> <span class="o">=</span> <span class="n">club_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+<span class="c1"># Merge modifications into league_summary</span>
+<span class="n">league_summary</span> <span class="o">=</span> <span class="n">league_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
     <span class="n">club_market_value</span><span class="p">,</span>
     <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">"club_id"</span><span class="p">,</span> <span class="s2">"season"</span><span class="p">],</span>
     <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span>
@@ -8454,13 +8464,13 @@ The dataframes will contain summary stats of the league and contain the followin
     <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"own_position"</span><span class="p">:</span> <span class="s2">"league_finish"</span><span class="p">})</span>
 <span class="p">)</span>
 
-<span class="n">club_summary</span> <span class="o">=</span> <span class="n">club_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+<span class="n">league_summary</span> <span class="o">=</span> <span class="n">league_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
     <span class="n">ending_positions</span><span class="p">,</span>
     <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">"club_id"</span><span class="p">,</span> <span class="s2">"season"</span><span class="p">],</span>
     <span class="n">how</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">club_summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">league_summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -8651,7 +8661,7 @@ The dataframes will contain summary stats of the league and contain the followin
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Reordering columns then save</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Make sure columns are in the preferred order then save</span>
 
 <span class="n">cols_order</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"season"</span><span class="p">,</span>
@@ -8678,15 +8688,15 @@ The dataframes will contain summary stats of the league and contain the followin
     <span class="s2">"cards_per_game"</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">club_summary</span> <span class="o">=</span> <span class="n">club_summary</span><span class="p">[</span><span class="n">cols_order</span><span class="p">]</span>
+<span class="n">league_summary</span> <span class="o">=</span> <span class="n">league_summary</span><span class="p">[</span><span class="n">cols_order</span><span class="p">]</span>
 
 
 <span class="c1"># Final column cleaning</span>
-<span class="n">club_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span> <span class="o">=</span> <span class="n">club_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">league_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span> <span class="o">=</span> <span class="n">league_summary</span><span class="p">[</span><span class="s2">"season"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-<span class="n">club_summary</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span>  <span class="sa">f</span><span class="s2">"club_summary</span><span class="si">{</span><span class="n">league_code_in_file_name</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">league_summary</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span>  <span class="sa">f</span><span class="s2">"league_summary</span><span class="si">{</span><span class="n">league_code_in_file_name</span><span class="si">}</span><span class="s2">.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="n">club_summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">league_summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -8877,9 +8887,9 @@ The dataframes will contain summary stats of the league and contain the followin
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Reference:</p>
-<p>Cariboo, D. 2020. Player Scores Dataset. Kaggle.
+<p>Cariboo, D. 2020. Player Scores Dataset. Kaggle.<br/>
 <a href="https://www.kaggle.com/datasets/davidcariboo/player-scores">https://www.kaggle.com/datasets/davidcariboo/player-scores</a></p>
-<p>Pandas. 2025. “Community tutorials” Pandas Documentation.
+<p>Pandas. 2025. “Community tutorials” Pandas Documentation.<br/>
 Retrieved November 10, 2025 from <a href="https://pandas.pydata.org/docs/getting_started/tutorials.html">https://pandas.pydata.org/docs/getting_started/tutorials.html</a></p>
 <p>Beggs, C. 2024. Soccer Analytics: An Introduction Using R. Chapman and Hall/CRC</p>
 </div>
